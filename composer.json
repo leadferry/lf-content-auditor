@@ -1,0 +1,29 @@
+{
+    "require": {
+        "davechild/textstatistics": "1.*",
+        "wordpress/wp-list-table": "~3.8"
+    },
+	"repositories": [
+		{
+			"type": "package",
+			"package": {
+				"name": "wordpress/wp-list-table",
+				"version": "3.8",
+				"dist": {
+					"url": "http://core.svn.wordpress.org/tags/3.8/wp-admin/includes/class-wp-list-table.php",
+					"type": "file"
+				}
+			}
+		}
+	],
+	"scripts": {
+		"post-install-cmd": [
+			"bower install",
+			"sed -i '' \"s/WP_List_Table/Content_Auditor_List_Table/\" vendor/wordpress/wp-list-table/class-wp-list-table.php"
+		],
+		"post-update-cmd": [
+			"bower install",
+			"sed -i '' \"s/WP_List_Table/Content_Auditor_List_Table/\" vendor/wordpress/wp-list-table/class-wp-list-table.php"
+		]
+	}
+}
