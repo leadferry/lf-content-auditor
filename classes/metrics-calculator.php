@@ -19,7 +19,7 @@ class Metrics_Calculator {
 
 		$html = str_get_html( $this->get_output_page() );
 		$title = $html->find( 'title' );
-		$output =  ( null != $title ) ? $title[0]->plaintext : "Not Avaialble";
+		$output =  ( null != $title ) ? $title[0]->plaintext : "Not Available";
 				
 		$html->clear();
 		unset( $html );
@@ -31,7 +31,7 @@ class Metrics_Calculator {
 
 		$html = str_get_html( $this->get_output_page() );
 		$meta = $html->find( 'meta[name=description]' );
-		$output = ( null != $meta ) ? $meta[0]->content : "Not Avaialble";
+		$output = ( null != $meta ) ? $meta[0]->content : "Not Available";
 
 		$html->clear();
 		unset( $html );

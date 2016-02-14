@@ -50,7 +50,7 @@ class Report_Generator {
 			return $current_user->user_email; 
 		});
 		add_filter( 'wp_mail_from_name', function() { return 'Content Auditor'; });
-		wp_mail( $to, $subject, $message, $headers, $file );
+		wp_mail( $to, $subject, $message, $headers );
 
 		
 	}

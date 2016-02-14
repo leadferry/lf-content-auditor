@@ -31,11 +31,12 @@ class Content_Auditor_Settings {
 
 				<input class="button button-primary" name="submit" type="submit" value="<?php esc_attr_e('Save Changes'); ?>" />
 			</form>
+
 		</div> 
 		<h3>Generate report</h3>
 		<p> <?php echo __( 'Click the button below to generate your audit report in CSV(Comma Separated Values) format.'); ?> </p>
 		<form id="report_generator" action="" method="post">
-			<input class="button button-secondary" type="submit" name="submit" value="<?php esc_attr_e('Generate Report'); ?>">
+			<input id="report_generator_submit" class="button button-secondary" type="submit" name="submit" value="<?php esc_attr_e('Generate Report'); ?>">
 			<input type="hidden" name="generate_report" value="1" />
 		</form>
 		<div>
@@ -90,8 +91,8 @@ class Content_Auditor_Settings {
 
 		echo '<p><input type="checkbox" name="content_auditor_metrics[url]" value="URL"' . checked( $options['url'], "URL", false ) . ' />' . __( " URL" ); 
 		echo '<p><input type="checkbox" name="content_auditor_metrics[page_title]" value="Page Title"' . checked( $options['page_title'], "Page Title", false ) . ' />' . __( " Page Title" ); 
-		echo '<p><input type="checkbox" name="content_auditor_metrics[meta_title]" value="Meta Title"' . checked( $options['meta_title'], "Meta Title", false ) . ' onchange= "if(checked){ alert( &quot; Report generatation can take a while longer &quot; );}"/>' . __( " Meta Title" ); 
-		echo '<p><input type="checkbox" name="content_auditor_metrics[meta_description]" value="Meta Description"' . checked( $options['meta_description'], "Meta Description", false ) . ' onchange= "if(checked) {alert( &quot; Report generatation can take a while longer &quot; );}" />' . __( " Meta Description" ); 
+		echo '<p><input type="checkbox" name="content_auditor_metrics[meta_title]" value="Meta Title"' . checked( $options['meta_title'], "Meta Title", false ) . ' onchange= "if(checked){ alert( &quot; Report generatation can take a while longer &quot; );}"/>' . __( " Meta Title*" ); 
+		echo '<p><input type="checkbox" name="content_auditor_metrics[meta_description]" value="Meta Description"' . checked( $options['meta_description'], "Meta Description", false ) . ' onchange= "if(checked) {alert( &quot; Report generatation can take a while longer &quot; );}" />' . __( " Meta Description*" ); 
 		echo '<p><input type="checkbox" name="content_auditor_metrics[author]" value="Author"' . checked( $options['author'], "Author", false ) . ' />' . __( " Author" ); 
 		echo '<p><input type="checkbox" name="content_auditor_metrics[publish_date]" value="Publish Date"' . checked( $options['publish_date'], "Publish Date", false ) . ' />' . __( " Publish Date" ); 
 		echo '<p><input type="checkbox" name="content_auditor_metrics[last_updated]" value="Last Update"' . checked( $options['last_updated'], "Last Update", false ) . ' />' . __( " Last Updated" ); 
@@ -99,6 +100,7 @@ class Content_Auditor_Settings {
 		echo '<p><input type="checkbox" name="content_auditor_metrics[images]" value="Images"' . checked( $options['images'], "Images", false ) . ' />' . __( " Number of Images" ); 
 		echo '<p><input type="checkbox" name="content_auditor_metrics[word_count]" value="Word Count"' . checked( $options['word_count'], "Word Count", false ) . ' />' . __( " Number of Words" ); 
 		echo '<p><input type="checkbox" name="content_auditor_metrics[readability_score]" value="Flesch-Kincaid Readability Score"' . checked( $options['readability_score'], "Flesch-Kincaid Readability Score", false ) . ' />' . __( " Flesch–Kincaid Readability Score" ) . ' <a target ="_blank" href="https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests">(Know more about this score)</a>'; 
+		echo '<p><br/><i>*If you select these metrics, report generation can take a long time depending on the amount of posts/pages you have on your site</i> </p>';
 	}
 
 	function field_select_post_type() {
