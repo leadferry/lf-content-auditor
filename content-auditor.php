@@ -54,6 +54,15 @@ class Content_Auditor {
 			);
 			update_option( 'content_auditor_post_type', $defaults );
 		}
+
+		if( false === get_option( 'content_audit_criteria' ) ) {
+			$defaults = array(
+				'criteria' => 'full-site',
+				'older_than_x' => '7',
+				'created_in_x' => '7',
+			);
+			update_option( 'content_audit_criteria', $defaults );
+		}
 	}
 
 	static function deactivate() {
@@ -69,6 +78,13 @@ class Content_Auditor {
 
 		$this->report_generator->generate_report();
 	}
+
+	function test_generate_report() {
+		if( isset($_POST['generate_report'])){
+			$this->report_generator->generate_report();
+		}
+	}
+
 	function add_scripts() {
 		wp_enqueue_script( 'content-auditor-js', plugin_dir_url(__FILE__)  . '/js/content-auditor.js', '', '', true );
 		wp_localize_script( 'content-auditor-js', 'data', array( 'url'  => admin_url( 'admin-ajax.php' ) ) );

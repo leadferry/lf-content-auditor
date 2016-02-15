@@ -51,8 +51,6 @@ class Report_Generator {
 		});
 		add_filter( 'wp_mail_from_name', function() { return 'Content Auditor'; });
 		wp_mail( $to, $subject, $message, $headers );
-
-		
 	}
 
 	function initiate_filesystem() {
@@ -81,6 +79,21 @@ class Report_Generator {
 			$args['post_type'] = 'post';
 		}
 
+		$content_criteria = get_option( 'content_audit_criteria' );
+		if( $content_criteria['criteria'] == 'older_than_x' ) {
+			$days = date( 'd-M-Y', strtotime( '-' . $content_criteria['older_than_x'] . ' days') );
+			$args['date_query'] = array( 
+				array( 'before' => $days )
+			);
+		}
+
+		if( $content_criteria['criteria'] == 'created_in_x' ) {
+			$days = date( 'd-M-Y', strtotime( '-' . $content_criteria['created_in_x'] . ' days') );
+			$args['date_query'] = array( 
+				array( 'after' => $days )
+			);
+		}
+
 		$args['posts_per_page'] = -1;
 		return $args;
 	}
@@ -107,7 +120,6 @@ class Report_Generator {
 		 		$results[] = $row;
 			}
 		}
-
 		$more = $real_more;
 		return $results;
 	}
@@ -115,7 +127,6 @@ class Report_Generator {
 	function convert_to_csv( $values ) {
 
 		$line = '';
-
 		$values = array_map( function ( $value ) {
         	return '"' . str_replace( '"', '""', $value ) . '"';
    		}, $values );

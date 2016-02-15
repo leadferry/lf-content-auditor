@@ -57,13 +57,11 @@ class Reports_List_Table extends Content_Auditor_List_Table {
 
         if ( $filelist ){
             foreach( $filelist as $file ) {
-                if( strpos( $file['name'], 'audit_report' ) !== false ) {
-
-                    $timestamp = preg_match( '/_audit_report_(?P<timestamp>\d+)/', $file['name'], $matches );
+                if( strpos( $file['name'], 'audit_report' ) !== false ) {                    
                     $table_data[] = array( 
                         'name' => '<a href="' . $reports_dir_url . '/' . $file['name'] . '">' . $file['name'] . '</a><br/>',
-                        'date' => $file['lastmod'],
-                        'timestamp' => $matches['timestamp'],
+                        'date' => date( 'd M, Y H:i:s', $file['lastmodunix'] ),
+                        'timestamp' => $file['lastmodunix'],
                     );
                 }
             }

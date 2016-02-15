@@ -52,9 +52,11 @@ class Content_Auditor_Settings {
 
 		register_setting( 'content_auditor_options', 'content_auditor_metrics', array( $this, 'content_auditor_metrics' ) );
 		register_setting( 'content_auditor_options', 'content_auditor_post_type' );
+		register_setting( 'content_auditor_options', 'content_audit_criteria' );
 		add_settings_section( 'content_auditor_settings_section', __( 'Report Generator' ), array( $this, 'content_auditor_settings_section' ), 'content_auditor_settings' );
 		add_settings_field( 'select-metrics', __( 'Select Metrics' ), array( $this, 'field_select_metrics' ), 'content_auditor_settings', 'content_auditor_settings_section' );
 		add_settings_field( 'select-post-type', __( 'Select Post Type' ), array( $this, 'field_select_post_type' ), 'content_auditor_settings', 'content_auditor_settings_section' );
+		add_settings_field( 'select-audit-criteria', __( 'Content Audit Criteria' ), array( $this, 'field_select_audit_criteria' ), 'content_auditor_settings', 'content_auditor_settings_section' );
 	}
 
 	function content_auditor_settings_section() {
@@ -89,28 +91,37 @@ class Content_Auditor_Settings {
 		$options['word_count'] = isset( $options['word_count'] ) ? $options['word_count'] : false;
 		$options['readability_score'] = isset( $options['readability_score'] ) ? $options['readability_score'] : false;
 
-		echo '<p><input type="checkbox" name="content_auditor_metrics[url]" value="URL"' . checked( $options['url'], "URL", false ) . ' />' . __( " URL" ); 
-		echo '<p><input type="checkbox" name="content_auditor_metrics[page_title]" value="Page Title"' . checked( $options['page_title'], "Page Title", false ) . ' />' . __( " Page Title" ); 
-		echo '<p><input type="checkbox" name="content_auditor_metrics[meta_title]" value="Meta Title"' . checked( $options['meta_title'], "Meta Title", false ) . ' onchange= "if(checked){ alert( &quot; Report generatation can take a while longer &quot; );}"/>' . __( " Meta Title*" ); 
-		echo '<p><input type="checkbox" name="content_auditor_metrics[meta_description]" value="Meta Description"' . checked( $options['meta_description'], "Meta Description", false ) . ' onchange= "if(checked) {alert( &quot; Report generatation can take a while longer &quot; );}" />' . __( " Meta Description*" ); 
-		echo '<p><input type="checkbox" name="content_auditor_metrics[author]" value="Author"' . checked( $options['author'], "Author", false ) . ' />' . __( " Author" ); 
-		echo '<p><input type="checkbox" name="content_auditor_metrics[publish_date]" value="Publish Date"' . checked( $options['publish_date'], "Publish Date", false ) . ' />' . __( " Publish Date" ); 
-		echo '<p><input type="checkbox" name="content_auditor_metrics[last_updated]" value="Last Update"' . checked( $options['last_updated'], "Last Update", false ) . ' />' . __( " Last Updated" ); 
-		echo '<p><input type="checkbox" name="content_auditor_metrics[comments]" value="Comments"' . checked( $options['comments'], "Comments", false ) . ' />' . __( " Total Comments" ); 
-		echo '<p><input type="checkbox" name="content_auditor_metrics[images]" value="Images"' . checked( $options['images'], "Images", false ) . ' />' . __( " Number of Images" ); 
-		echo '<p><input type="checkbox" name="content_auditor_metrics[word_count]" value="Word Count"' . checked( $options['word_count'], "Word Count", false ) . ' />' . __( " Number of Words" ); 
-		echo '<p><input type="checkbox" name="content_auditor_metrics[readability_score]" value="Flesch-Kincaid Readability Score"' . checked( $options['readability_score'], "Flesch-Kincaid Readability Score", false ) . ' />' . __( " Flesch–Kincaid Readability Score" ) . ' <a target ="_blank" href="https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests">(Know more about this score)</a>'; 
+		echo '<p><input type="checkbox" name="content_auditor_metrics[url]" value="URL"' . checked( $options['url'], "URL", false ) . ' />' . __( " URL" ) . '</p>'; 
+		echo '<p><input type="checkbox" name="content_auditor_metrics[page_title]" value="Page Title"' . checked( $options['page_title'], "Page Title", false ) . ' />' . __( " Page Title" ) . '</p>'; 
+		echo '<p><input type="checkbox" name="content_auditor_metrics[meta_title]" value="Meta Title"' . checked( $options['meta_title'], "Meta Title", false ) . ' onchange= "if(checked){ alert( &quot; Report generatation can take a while longer &quot; );}"/>' . __( " Meta Title*" ) . '</p>'; 
+		echo '<p><input type="checkbox" name="content_auditor_metrics[meta_description]" value="Meta Description"' . checked( $options['meta_description'], "Meta Description", false ) . ' onchange= "if(checked) {alert( &quot; Report generatation can take a while longer &quot; );}" />' . __( " Meta Description*" ) . '</p>'; 
+		echo '<p><input type="checkbox" name="content_auditor_metrics[author]" value="Author"' . checked( $options['author'], "Author", false ) . ' />' . __( " Author" ) . '</p>'; 
+		echo '<p><input type="checkbox" name="content_auditor_metrics[publish_date]" value="Publish Date"' . checked( $options['publish_date'], "Publish Date", false ) . ' />' . __( " Publish Date" ) . '</p>'; 
+		echo '<p><input type="checkbox" name="content_auditor_metrics[last_updated]" value="Last Update"' . checked( $options['last_updated'], "Last Update", false ) . ' />' . __( " Last Updated" ) . '</p>'; 
+		echo '<p><input type="checkbox" name="content_auditor_metrics[comments]" value="Comments"' . checked( $options['comments'], "Comments", false ) . ' />' . __( " Total Comments" ) . '</p>'; 
+		echo '<p><input type="checkbox" name="content_auditor_metrics[images]" value="Images"' . checked( $options['images'], "Images", false ) . ' />' . __( " Number of Images" ) . '</p>'; 
+		echo '<p><input type="checkbox" name="content_auditor_metrics[word_count]" value="Word Count"' . checked( $options['word_count'], "Word Count", false ) . ' />' . __( " Number of Words" ) . '</p>'; 
+		echo '<p><input type="checkbox" name="content_auditor_metrics[readability_score]" value="Flesch-Kincaid Readability Score"' . checked( $options['readability_score'], "Flesch-Kincaid Readability Score", false ) . ' />' . __( " Flesch–Kincaid Readability Score" ) . ' <a target ="_blank" href="https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests">(Know more about this score)</a></p>'; 
 		echo '<p><br/><i>*If you select these metrics, report generation can take a long time depending on the amount of posts/pages you have on your site</i> </p>';
 	}
-
 	function field_select_post_type() {
-
 		$options = get_option( 'content_auditor_post_type' );
-		
 		$options['post'] = isset( $options['post'] ) ? $options['post'] : false;
 		$options['page'] = isset( $options['page'] ) ? $options['page'] : false;
 
-		echo '<p><input type="checkbox" name="content_auditor_post_type[post]" value="true"' . checked( $options['post'], "true", false ) . ' />' . __( " Post" ); 
-		echo '<p><input type="checkbox" name="content_auditor_post_type[page]" value="true"' . checked( $options['page'], "true", false ) . ' />' . __( " Page" ); 
+		echo '<p><input type="checkbox" name="content_auditor_post_type[post]" value="true"' . checked( $options['post'], "true", false ) . ' />' . __( " Post" ) . '</p>'; 
+		echo '<p><input type="checkbox" name="content_auditor_post_type[page]" value="true"' . checked( $options['page'], "true", false ) . ' />' . __( " Page" ) . '</p>'; 
+	}
+	function field_select_audit_criteria() {
+		$options = get_option( 'content_audit_criteria' );
+		$options['criteria'] = isset( $options['criteria'] ) ? $options['criteria'] : false;
+		$options['older_than_x'] = isset( $options['older_than_x'] ) ? $options['older_than_x'] : false;
+		$options['created_in_x'] = isset( $options['created_in_x'] ) ? $options['created_in_x'] : false;
+
+		echo '<p><input type="radio" name="content_audit_criteria[criteria]" value="full-site"' . checked( $options['criteria'], "full-site", false ) . ' />' . __( " Full Site Content" ) . '</p>'; 
+		echo '<p><input type="radio" name="content_audit_criteria[criteria]" value="older_than_x"' . checked( $options['criteria'], "older_than_x", false ) . ' />' . __( " Content older than " ) . '
+		<input type="number" name="content_audit_criteria[older_than_x]" min="1" max="9999" value="' . $options['older_than_x'] . '"> days</p>'; 
+		echo '<p><input type="radio" name="content_audit_criteria[criteria]" value="created_in_x"' . checked( $options['criteria'], "created_in_x", false ) . ' />' . __( " Content created in last " ) . '
+		<input type="number" name="content_audit_criteria[created_in_x]" min="1" max="9999" value="' . $options['created_in_x'] . '"> days</p>'; 
 	}
 }
