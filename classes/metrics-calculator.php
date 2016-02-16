@@ -85,4 +85,40 @@ class Metrics_Calculator {
 		ob_end_clean(); 
 		return $str['body'];
 	}
+
+	function facebook() {
+		$request = wp_remote_request( 'http://graph.facebook.com/?id=' . get_the_permalink() );
+		if ( ! is_wp_error( $request ) ) {
+		  	$body = json_decode( $request['body'] );
+		  	return isset( $body->count )? $body->count : "Not Available";
+		}
+		else {
+			return "Not Available";
+		}
+	}
+
+	function linkedin() {
+		$request = wp_remote_request( 'https://www.linkedin.com/countserv/count/share?url=' . get_the_permalink() . '&format=json' );
+		if ( ! is_wp_error( $request ) ) {
+		  	$body = json_decode( $request['body'] );
+		  	return $body->count;
+		}
+		else {
+			return "Not Available";
+		}
+	}
+
+	function pinterest() {
+
+		$request = wp_remote_request( 'http://api.pinterest.com/v1/urls/count.json?callback=count&url=' . get_the_permalink() );
+		if ( ! is_wp_error( $request ) ) {
+			$jsonp = $request['body'];
+			$jsonp = substr( $jsonp, strpos( $jsonp, '(') );
+		  	$body = json_decode( trim( $jsonp,'();' ) );
+		  	return $body->count;
+		}
+		else {
+			return "Not Available";
+		}
+	}
 }

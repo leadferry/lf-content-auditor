@@ -47,6 +47,15 @@ class Content_Auditor {
 			update_option( 'content_auditor_metrics', $defaults );
 		}
 
+		if( false === get_option( 'content_auditor_social_metrics' ) ) {
+			$defaults = array(
+				'facebook' => 'Facebook',
+				'linkedin' => 'Linkedin',
+				'pinterest' => 'Pinterest',
+			);
+			update_option( 'content_auditor_social_metrics', $defaults );
+		}
+
 		if( false === get_option( 'content_auditor_post_type' ) ) {
 			$defaults = array(
 				'post' => 'true',

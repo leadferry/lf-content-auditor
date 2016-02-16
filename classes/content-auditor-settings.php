@@ -51,10 +51,12 @@ class Content_Auditor_Settings {
 	function init_settings() {
 
 		register_setting( 'content_auditor_options', 'content_auditor_metrics', array( $this, 'content_auditor_metrics' ) );
+		register_setting( 'content_auditor_options', 'content_auditor_social_metrics' );
 		register_setting( 'content_auditor_options', 'content_auditor_post_type' );
 		register_setting( 'content_auditor_options', 'content_audit_criteria' );
 		add_settings_section( 'content_auditor_settings_section', __( 'Report Generator' ), array( $this, 'content_auditor_settings_section' ), 'content_auditor_settings' );
 		add_settings_field( 'select-metrics', __( 'Select Metrics' ), array( $this, 'field_select_metrics' ), 'content_auditor_settings', 'content_auditor_settings_section' );
+		add_settings_field( 'select-social-metrics', __( 'Select Social Metrics' ), array( $this, 'field_select_social_metrics' ), 'content_auditor_settings', 'content_auditor_settings_section' );
 		add_settings_field( 'select-post-type', __( 'Select Post Type' ), array( $this, 'field_select_post_type' ), 'content_auditor_settings', 'content_auditor_settings_section' );
 		add_settings_field( 'select-audit-criteria', __( 'Content Audit Criteria' ), array( $this, 'field_select_audit_criteria' ), 'content_auditor_settings', 'content_auditor_settings_section' );
 	}
@@ -104,6 +106,19 @@ class Content_Auditor_Settings {
 		echo '<p><input type="checkbox" name="content_auditor_metrics[readability_score]" value="Flesch-Kincaid Readability Score"' . checked( $options['readability_score'], "Flesch-Kincaid Readability Score", false ) . ' />' . __( " Flesch–Kincaid Readability Score" ) . ' <a target ="_blank" href="https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests">(Know more about this score)</a></p>'; 
 		echo '<p><br/><i>*If you select these metrics, report generation can take a long time depending on the amount of posts/pages you have on your site</i> </p>';
 	}
+
+	function field_select_social_metrics() {
+		$options = get_option( 'content_auditor_social_metrics' );
+		
+		$options['facebook'] = isset( $options['facebook'] ) ? $options['facebook'] : false;
+		$options['linkedin'] = isset( $options['linkedin'] ) ? $options['linkedin'] : false;
+		$options['pinterest'] = isset( $options['pinterest'] ) ? $options['pinterest'] : false;
+
+		echo '<p><input type="checkbox" name="content_auditor_social_metrics[facebook]" value="Facebook"' . checked( $options['facebook'], "Facebook", false ) . ' />' . __( " Facebook" ) . '</p>'; 
+		echo '<p><input type="checkbox" name="content_auditor_social_metrics[linkedin]" value="Linkedin"' . checked( $options['linkedin'], "Linkedin", false ) . ' />' . __( " Linkedin" ) . '</p>'; 
+		echo '<p><input type="checkbox" name="content_auditor_social_metrics[pinterest]" value="Pinterest"' . checked( $options['pinterest'], "Pinterest", false ) . ' />' . __( " Pinterest" ) . '</p>'; 
+	}
+
 	function field_select_post_type() {
 		$options = get_option( 'content_auditor_post_type' );
 		$options['post'] = isset( $options['post'] ) ? $options['post'] : false;

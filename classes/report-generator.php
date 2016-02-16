@@ -103,7 +103,7 @@ class Report_Generator {
 		global $more;
 		$real_more = $more;
 		
-		$metrics = get_option( 'content_auditor_metrics' );
+		$metrics = array_merge( get_option( 'content_auditor_metrics' ), get_option( 'content_auditor_social_metrics' ) );
 		$results = array();
 		$results[] = $metrics;
 
