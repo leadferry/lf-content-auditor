@@ -90,7 +90,7 @@ class Metrics_Calculator {
 		$request = wp_remote_request( 'http://graph.facebook.com/?id=' . get_the_permalink() );
 		if ( ! is_wp_error( $request ) ) {
 		  	$body = json_decode( $request['body'] );
-		  	return isset( $body->count )? $body->count : "Not Available";
+		  	return isset( $body->shares )? $body->shares : "Not Available";
 		}
 		else {
 			return "Not Available";
