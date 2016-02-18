@@ -15,7 +15,6 @@ require_once( 'vendor/autoload.php' );
 class Content_Auditor {
 
 	function __construct() {
-
 		register_activation_hook( __FILE__, array( $this, 'activate') );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivate') );
 
