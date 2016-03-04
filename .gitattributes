@@ -7,3 +7,4 @@ tests/ export-ignore
 composer.* export-ignore
 bower.json export-ignore
 .bowerrc export-ignore
+website/ export-ignore
