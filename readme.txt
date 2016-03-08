@@ -2,7 +2,7 @@
 Contributors: leadferry
 Author URI: https://leadferry.com/
 Plugin URL: https://leadferry.com/tools/content-audit-plugin-wordpress
-Tags: content marketing,content audit,content,marketing
+Tags: content marketing,content audit,content,marketing,audit,auditor
 Requires at least: 3.0
 Tested up to: 4.4
 Stable tag: trunk
@@ -40,6 +40,7 @@ Once all the files are copied, login to the WP Admin area and activate the Plugi
 Once installed, a new menu item named "Content Auditor" will appear on your wordpress admin menu. Make sure the metrics you want in the report is checked and click on save. Once your preference has been saved, you can generate the report.
 
 Report generation is scheduled to happen in the background. Once it's complete, you will receive an email. You can also go into the "Previously Generated Reports" tab to download previously generated reports.
+
 == Frequently Asked Questions ==
 
 **What are metrics supported by the audit plugin?**
@@ -63,7 +64,9 @@ Report generation is scheduled to happen in the background. Once it's complete, 
 
 Our plugin relies on share count data made available to developers by the social platforms.
 
-Twitter recently disabled providing share count. Google Plus does not have any official method to get sharing numbers. Since we do not have access to the share data of these platforms, we are unable to incorporate it into our reports.
+Twitter recently disabled providing share count. Google Plus does not have an official method to get sharing numbers yet.
+
+Since we do not have access to the share data of these platforms, we are unable to incorporate it into our reports.
 
 **What output formats do you support?**
 
@@ -72,6 +75,7 @@ Currently, we support report generation in CSV format compatible with Microsoft 
 **Why does it say it may take a long time if we select Meta Title/Meta Description?**
 
 Meta title and meta description are often handled by third party plugins. There is no native way to pull the information from these plugins. Hence, we have to relay on a custom mechanism that takes time to ensure the data is capture and presented in your report without errors. Unchecking these metrics will result in quicker report generation.
+
 == Screenshots ==
 1. Select the metrics you want to add to your audit report and click save. Note that checking Meta Title/Meta Description can significantly impact the report generation time based on the amount of content you have on your website.
 
@@ -81,4 +85,11 @@ Meta title and meta description are often handled by third party plugins. There 
 
 == Changelog ==
 = 0.1.0 =
+* First Release
+
+== Upgrade Notice ==
+= 0.1 =
 First Release
+
+== Credits ==
+* [PHP Text Statistics](https://github.com/DaveChild/Text-Statistics) by [Dave Child](mailto:dave@addedbytes.com)
